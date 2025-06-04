@@ -1,0 +1,36 @@
+{
+    "html": [
+        "README.md",
+        "branch.html",
+        "delete-html.html",
+        "delete-php.html",
+        "dna.txt",
+        "edit-html.html",
+        "edit-index.html",
+        "edit-php.html",
+        "freebox.html",
+        "index.html",
+        "qrcode-page.html",
+        "qrcode.html",
+        "readme.html",
+        "thing.json",
+        "trashmagic.css",
+        "trashmagic.html",
+        "trashmagic.js"
+    ],
+    "php": [
+        "branch.txt",
+        "compile-php.txt",
+        "delete-branch.txt",
+        "delete-file.txt",
+        "generate-dna.txt",
+        "list-branches.txt",
+        "list-files.txt",
+        "load-file.txt",
+        "local-replicator.txt",
+        "replicator.txt",
+        "save-file.txt",
+        "save-png.txt",
+        "upload-image.txt"
+    ]
+}
