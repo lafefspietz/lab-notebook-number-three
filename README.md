@@ -1,5 +1,6 @@
 # [Lab Notebook Number Three](https://github.com/lafefspietz/lab-notebook-number-three)
-  
+# [thing.txt](thing.txt)
+
   ![front cover](front-cover.png)
   ![title page](title-page.png)
   ![qrcode](qrcode.png)
@@ -13,5 +14,3 @@
    - [qrcode.html](qrcode.html)
    - [global replicator link](https://raw.githubusercontent.com/lafefspietz/lab-notebook-number-three/refs/heads/main/php/replicator.txt)
   
-
-## thing.txt
