@@ -1,8 +1,8 @@
-# [Lab Notebook Number Three](http://localhost/lab-notebook-number-three/)
+# [Lab Notebook Number Three](https://github.com/lafefspietz/lab-notebook-number-three)
   
-  ![](qrcode.png)
   ![](front-cover.png)
   ![](title-page.png)
+  ![](qrcode.png)
   
    - [index.html](index.html)
    - [thing.txt](thing.txt)
