@@ -1,11 +1,9 @@
-# [Lab Notebook Number Three](https://github.com/lafefspietz/lab-notebook-number-three)
+# [Water Bottle](github.com/lafefspietz/lab-notebook-number-three/tree/main/water-bottle)
 # [thing.json](thing.json)
 
-  ![front cover](front-cover.png)
-  ![title page](title-page.png)
   ![qrcode](qrcode.png)
   
-   - [http://localhost/lab-notebook-number-three/](http://localhost/lab-notebook-number-three/)
+   - [http://localhost/lab-notebook-number-three/water-bottle](http://localhost/lab-notebook-number-three/water-bottle)
    - [edit-html.html](edit-html.html)
    - [edit-index.html](edit-index.html)
    - [edit-php.html](edit-php.html)
