@@ -1,8 +1,8 @@
 # [Lab Notebook Number Three](https://github.com/lafefspietz/lab-notebook-number-three)
   
-  ![](front-cover.png)
-  ![](title-page.png)
-  ![](qrcode.png)
+  ![front cover](front-cover.png)
+  ![title page](title-page.png)
+  ![qrcode](qrcode.png)
   
    - [index.html](index.html)
    - [thing.txt](thing.txt)
