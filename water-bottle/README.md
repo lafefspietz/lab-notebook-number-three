@@ -1,4 +1,4 @@
-# [Water Bottle](github.com/lafefspietz/lab-notebook-number-three/tree/main/water-bottle)
+# [Water Bottle](https://github.com/lafefspietz/lab-notebook-number-three/tree/main/water-bottle/)
 # [thing.json](thing.json)
 
   ![qrcode](qrcode.png)
