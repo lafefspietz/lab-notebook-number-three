@@ -52,40 +52,54 @@ https://cloud9-sdk.readme.io/docs/language-mode
 <script>
 
 thing = {};
+/*
 thing.name = "Lab Notebook #3 (2024 reboot)";
 thing.location = "NIST Boulder, building 1, room 2111";
 thing.description = "Green hard cover bound notebook with NIST logo, used for daily record of Lafe Spietz's work at NIST in flux quantum electronics project in Volt group in the RF technoloogy division of the communications technology laboratory at the National Institute of Standards and Technology in Boulder, Colorado";
 thing.contact = "cell phone: (303)817-8283 email: lafe.f.spietz@nist.gov";
 thing.message = "if found, please return";
 thing.url = "https://github.com/lafefspietz/lab-notebook-number-three/";
-
 savething();
+*/
 
 loadthing();
 
-for(key in thing){
-    var newtr = document.createElement("TR");
-    document.getElementById("thingtable").appendChild(newtr);
-    var newtd = document.createElement("TD");
-    newtd.innerHTML = key;
-    newtr.appendChild(newtd);
-    var newtd = document.createElement("TD");
-    var newinput = document.createElement("INPUT");
-    newtd.appendChild(newinput);
-    newtr.appendChild(newtd);
-    newinput.value = thing[key];
+
+function loadtable(){
+    document.getElementById("thingtable").innerHTML = "";
+    for(key in thing){
+        var newtr = document.createElement("TR");
+        document.getElementById("thingtable").appendChild(newtr);
+        var newtd = document.createElement("TD");
+        newtd.innerHTML = key;
+        newtr.appendChild(newtd);
+        var newtd = document.createElement("TD");
+        var newinput = document.createElement("INPUT");
+        newtd.appendChild(newinput);
+        newtr.appendChild(newtd);
+        newinput.value = thing[key];
+        newinput.onchange = function(){
+            var localkey = this.parentNode.parentNode.getElementsByTagName("TD")[0].innerHTML;
+            thing[localkey] = this.value;
+            savething();
+        }
+    }
 }
 
 function loadthing(){
+    thing = {};
     var httpc = new XMLHttpRequest();
     httpc.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             thing = JSON.parse(this.responseText);
+            loadtable();
         }
     };
     httpc.open("GET", "load-file.php?filename=thing.txt", true);
     httpc.send();
+
 }
+
 function savething(){
     data = encodeURIComponent(JSON.stringify(thing,null,"    "));
     var httpc = new XMLHttpRequest();
