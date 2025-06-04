@@ -11,6 +11,7 @@
    - [edit-index.html](edit-index.html)
    - [edit-php.html](edit-php.html)
    - [qrcode.html](qrcode.html)
+   - [global replicator link](https://raw.githubusercontent.com/lafefspietz/lab-notebook-number-three/refs/heads/main/php/replicator.txt)
   
 
 ## thing.txt
