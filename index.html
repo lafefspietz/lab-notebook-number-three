@@ -95,7 +95,7 @@ function loadthing(){
             loadtable();
         }
     };
-    httpc.open("GET", "load-file.php?filename=thing.txt", true);
+    httpc.open("GET", "load-file.php?filename=thing.json", true);
     httpc.send();
 
 }
@@ -106,7 +106,7 @@ function savething(){
     var url = "save-file.php";        
     httpc.open("POST", url, true);
     httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
-    httpc.send("data="+data+"&filename=thing.txt");//send text to save-file.php
+    httpc.send("data="+data+"&filename=thing.json");//send text to save-file.php
 }
 
 </script>

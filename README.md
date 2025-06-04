@@ -1,12 +1,10 @@
 # [Lab Notebook Number Three](https://github.com/lafefspietz/lab-notebook-number-three)
-# [thing.txt](thing.txt)
+# [thing.json](thing.json)
 
   ![front cover](front-cover.png)
   ![title page](title-page.png)
   ![qrcode](qrcode.png)
   
-   - [index.html](index.html)
-   - [thing.txt](thing.txt)
    - [http://localhost/lab-notebook-number-three/](http://localhost/lab-notebook-number-three/)
    - [edit-html.html](edit-html.html)
    - [edit-index.html](edit-index.html)
