@@ -1,0 +1,230 @@
+ <!doctype html>
+<html>
+<head>
+ <!-- 
+README MARKDOWN EDITOR!
+
+-->
+
+<!--Stop Google:-->
+<META NAME="robots" CONTENT="noindex,nofollow">
+    
+<link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADw8OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAABAAEAAAAQAAEAERAAABARAQEREQAAEBEBAAEAAAAREREAAQAAABEAEQABAAAAEQARAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAD//wAA3u8AAN7HAADSgwAA0u8AAMDvAADM7wAAzO8AAP//AAD//wAA//8AAP//AAD//wAA" rel="icon" type="image/x-icon">
+
+    
+<!--
+ace.js project home:
+https://ace.c9.io/
+
+list of languages:
+https://cloud9-sdk.readme.io/docs/language-mode
+
+
+-->    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.js"></script>
+    <!--
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script>
+            MathJax.Hub.Config({
+                tex2jax: {
+                inlineMath: [['$','$'], ['\\(','\\)']],
+                processEscapes: true,
+                processClass: "mathjax",
+                ignoreClass: "no-mathjax"
+                }
+            });//			MathJax.Hub.Typeset();//tell Mathjax to update the math
+        </script>
+        -->
+        
+<title>Web of things</title>
+</head>
+<body>
+    <h1>
+        <a href = "thing.json">thing.json</a>
+    </h1>
+<table>
+    <tr>
+        <td>New attribute name:</td>
+        <td>
+            <input id = "newnameinput">
+        </td>
+    </tr>
+</table>
+<table id ="thingtable"></table>
+
+    <h1>
+        <a href = "library.json">library.json</a>
+    </h1>
+
+
+<ul>
+    <li>
+        <a href = "edit-index.html">edit-index.html</a>
+    </li>
+    <li>
+        <A href = "readme.html">readme.html</A>
+    </li>
+    <LI>
+        <A href = "../">up a level in tree</A>
+    </LI>    
+    <LI>
+        <A href = "branch.html">branch.html</A>
+    </LI>
+</ul>
+<script>
+
+document.getElementById("newnameinput").value = "";
+document.getElementById("newnameinput").onchange = function(){
+    newname = this.value;
+    thing[newname] = "";
+    savething();
+    loadthing();
+}
+
+thing = {};
+
+/*
+thing.sort ="enter sorting parameter";
+thing.url = "enter url";
+thing.display = "enter display name";
+savething();
+*/
+
+
+/*
+thing.name = "Lab Notebook #3 (2024 reboot)";
+thing.location = "NIST Boulder, building 1, room 2111";
+thing.description = "Green hard cover bound notebook with NIST logo, used for daily record of Lafe Spietz's work at NIST in flux quantum electronics project in Volt group in the RF technoloogy division of the communications technology laboratory at the National Institute of Standards and Technology in Boulder, Colorado";
+thing.contact = "cell phone: (303)817-8283 email: lafe.f.spietz@nist.gov";
+thing.message = "if found, please return";
+thing.url = "https://github.com/lafefspietz/lab-notebook-number-three/";
+savething();
+*/
+
+/*
+
+a library is a json array with all the thing.json from all the things in the thing library 
+
+a library should be a list of links, each linking to a thing README and with text based on some display attribute such title or name and some sorting attributge like call number or alpha by author so each thing should always have a 
+
+to create a library we need a:
+1. sorting attribute
+2. display attribute
+3. url attribute
+and those attributes must be present for all thing.json files
+to make this universal, we can clone the data on multiple attributes, then we can have a fixed standard minimum which is
+
+.sort
+.display
+.url
+
+*/
+
+loadthing();
+
+
+function loadtable(){
+    document.getElementById("thingtable").innerHTML = "";
+    for(key in thing){
+        var newtr = document.createElement("TR");
+        document.getElementById("thingtable").appendChild(newtr);
+        var newtd = document.createElement("TD");
+        newtr.appendChild(newtd);
+        var newinput = document.createElement("INPUT");
+        newtd.appendChild(newinput);
+        newinput.value = key;
+        newinput.onchange = function(){
+            var localkey = this.parentNode.parentNode.getElementsByTagName("TD")[0].getElementsByTagName("INPUT")[0].value;
+            thing[localkey] = this.parentNode.parentNode.getElementsByTagName("TD")[2].getElementsByTagName("INPUT")[0].value;
+            savething();
+            loadthing();
+        }
+        var newtd = document.createElement("TD");
+        newtd.innerHTML = ":";
+        newtr.appendChild(newtd);
+        var newtd = document.createElement("TD");
+        var newinput = document.createElement("INPUT");
+        newinput.className = "value";
+        newtd.appendChild(newinput);
+        newtr.appendChild(newtd);
+        newinput.value = thing[key];
+        newinput.onchange = function(){
+            var localkey = this.parentNode.parentNode.getElementsByTagName("TD")[0].getElementsByTagName("INPUT")[0].value;
+            thing[localkey] = this.value;
+            savething();
+        }
+        var newtd = document.createElement("TD");
+        newtd.innerHTML = "DELETE";
+        newtd.className = "deletex";
+        newtd.onclick = function(){
+            var localkey = this.parentNode.getElementsByTagName("TD")[0].getElementsByTagName("INPUT")[0].value;
+            delete thing[localkey];
+            fixthing();
+            savething();
+            loadthing();
+        }
+        newtr.appendChild(newtd);
+    }
+    
+}
+
+function loadthing(){
+    thing = {};
+    var httpc = new XMLHttpRequest();
+    httpc.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            thing = JSON.parse(this.responseText);
+            loadtable();
+        }
+    };
+    httpc.open("GET", "load-file.php?filename=thing.json", true);
+    httpc.send();
+
+}
+
+function savething(){
+    data = encodeURIComponent(JSON.stringify(thing,null,"    "));
+    var httpc = new XMLHttpRequest();
+    var url = "save-file.php";        
+    httpc.open("POST", url, true);
+    httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+    httpc.send("data="+data+"&filename=thing.json");//send text to save-file.php
+}
+
+function fixthing(){
+    if(thing.sort == undefined){    
+        thing.sort ="enter sorting parameter";
+    }
+    if(thing.url == undefined){
+        thing.url = "enter url";
+    }
+    if(thing.display == undefined){
+        thing.display = "enter display name";
+    }
+}
+
+</script>
+<style>
+body{
+    font-family:Arial;
+    font-size:1.5em;
+}
+.deletex{
+    color:red;
+    cursor:pointer;
+}
+.deletex:hover{
+    background-color:green;
+}
+.deletex:active{
+    background-color:yellow;
+}
+
+.value{
+    width:60em;
+}
+</style>
+</body>
+</html>
