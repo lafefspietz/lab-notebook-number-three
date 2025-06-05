@@ -1,5 +1,5 @@
 <?php
-$dnaurl = "https://raw.githubusercontent.com/lafefspietz/lab-notebook-number-three/refs/heads/main/dna.txt";
+$dnaurl = "https://raw.githubusercontent.com/lafefspietz/lab-notebook-number-three/refs/heads/main/json/dna.txt";
 
 if(isset($_GET["dna"])){
     $dnaurl = $_GET["dna"];
@@ -11,7 +11,7 @@ $dna = json_decode($dnaraw);
 
 mkdir("php");
 
-copy("https://raw.githubusercontent.com/lafefspietz/lab-notebook-number-three/refs/heads/main/php/replicator.txt","replicator.php");
+copy("https://raw.githubusercontent.com/lafefspietz/lab-notebook-number-three/refs/heads/main/json/php/replicator.txt","replicator.php");
 
 
 foreach($dna->html as $value){

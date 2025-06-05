@@ -10,6 +10,7 @@
         "edit-php.html",
         "freebox.html",
         "index.html",
+        "library.json",
         "qrcode-page.html",
         "qrcode.html",
         "readme.html",
