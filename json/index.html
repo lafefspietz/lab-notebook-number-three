@@ -11,32 +11,6 @@ README MARKDOWN EDITOR!
     
 <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADw8OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAABAAEAAAAQAAEAERAAABARAQEREQAAEBEBAAEAAAAREREAAQAAABEAEQABAAAAEQARAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAD//wAA3u8AAN7HAADSgwAA0u8AAMDvAADM7wAAzO8AAP//AAD//wAA//8AAP//AAD//wAA" rel="icon" type="image/x-icon">
 
-    
-<!--
-ace.js project home:
-https://ace.c9.io/
-
-list of languages:
-https://cloud9-sdk.readme.io/docs/language-mode
-
-
--->    
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.8.6/showdown.js"></script>
-    <!--
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script>
-            MathJax.Hub.Config({
-                tex2jax: {
-                inlineMath: [['$','$'], ['\\(','\\)']],
-                processEscapes: true,
-                processClass: "mathjax",
-                ignoreClass: "no-mathjax"
-                }
-            });//			MathJax.Hub.Typeset();//tell Mathjax to update the math
-        </script>
-        -->
         
 <title>Web of things</title>
 </head>
@@ -54,25 +28,30 @@ https://cloud9-sdk.readme.io/docs/language-mode
 </table>
 <table id ="thingtable"></table>
 
-    <h1>
-        <a href = "library.json">library.json</a>
-    </h1>
+<h1>
+    <a href = "library.json">library.json</a>
+</h1>
+<ol id = "library"></ol>
+
+<h1>Tree</h1>
+<ul id = "tree"></ul>
 
 
-<ul>
-    <li>
-        <a href = "edit-index.html">edit-index.html</a>
-    </li>
-    <li>
-        <A href = "readme.html">readme.html</A>
-    </li>
-    <LI>
-        <A href = "../">up a level in tree</A>
-    </LI>    
-    <LI>
-        <A href = "branch.html">branch.html</A>
-    </LI>
-</ul>
+<h2>
+    <a href = "edit-index.html">edit-index.html</a>
+</h2>
+<h2>
+    <a href = "edit-php.html">edit-php.html</a>
+</h2>
+<h2>
+    <a href = "edit-html.html">edit-html.html</a>
+</h2>
+<h2>
+    <A href = "readme.html">readme.html</A>
+</h2>
+
+
+
 <script>
 
 document.getElementById("newnameinput").value = "";
@@ -84,6 +63,78 @@ document.getElementById("newnameinput").onchange = function(){
 }
 
 thing = {};
+library  = [];
+buildlibrary();
+
+function loadlibrary(){
+    document.getElementById("library").innerHTML = "";
+    for(var index = 0;index < library.length;index++){
+        var newli = document.createElement("LI");
+        var newa = document.createElement("A");
+        newa.innerHTML = library[index].display;
+        newa.href = library[index].url;
+        newli.appendChild(newa);
+        document.getElementById("library").appendChild(newli);
+    }
+}
+        
+function buildlibrary(){
+    directories = [];
+    var httpc2 = new XMLHttpRequest();
+    httpc2.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        directories = JSON.parse(this.responseText);
+        document.getElementById("tree").innerHTML = "";
+        var newli = document.createElement("LI");
+        var newa = document.createElement("A");
+        newa.innerHTML = "../";
+        newa.href = "../";
+        newli.appendChild(newa);
+        document.getElementById("tree").appendChild(newli);
+        var newli = document.createElement("LI");
+        var newa = document.createElement("A");
+        newa.innerHTML = "branch.html";
+        newa.href = "branch.html";
+        newli.appendChild(newa);
+        document.getElementById("tree").appendChild(newli);
+
+        
+        for(var index =  0;index < directories.length;index++){
+            
+            var newli = document.createElement("LI");
+            var newa = document.createElement("A");
+            newa.innerHTML = directories[index] + "/";
+            newa.href = directories[index] + "/";
+            newli.appendChild(newa);
+            document.getElementById("tree").appendChild(newli);
+            
+            var httpc = new XMLHttpRequest();
+            httpc.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var localjson = JSON.parse(this.responseText);
+                    library.push(localjson);
+                    loadlibrary();
+                    savelibrary();
+                }
+            };
+            httpc.open("GET", "load-file.php?filename=" + directories[index] + "/thing.json", true);
+            httpc.send();
+            }
+        }
+        //sort by the sorting attribute here
+        for(var index = 0;index < library.length;index++){
+            var newli = document.createElement("LI");
+            var newa = document.createElement("A");
+            newa.innerHTML = library[index].display;
+            newa.href = library[index].url;
+            newli.appendChild(newa);
+            document.getElementById("library").appendChild(newli);
+            console.log(index.toString());
+        }
+    };
+    httpc2.open("GET", "list-branches.php", true);
+    httpc2.send();
+}
 
 /*
 thing.sort ="enter sorting parameter";
@@ -191,6 +242,16 @@ function savething(){
     httpc.open("POST", url, true);
     httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
     httpc.send("data="+data+"&filename=thing.json");//send text to save-file.php
+}
+
+function savelibrary(){
+    data = encodeURIComponent(JSON.stringify(library,null,"    "));
+    var httpc = new XMLHttpRequest();
+    var url = "save-file.php";        
+    httpc.open("POST", url, true);
+    httpc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+    httpc.send("data="+data+"&filename=library.json");//send text to save-file.php
+    
 }
 
 function fixthing(){
